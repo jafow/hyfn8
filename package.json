@@ -1,0 +1,26 @@
+{
+  "name": "hyfn-coding-challenge",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/tests.js",
+    "build": "./node_modules/.bin/webpack",
+    "lint": "./node_modules/.bin/eslint",
+    "start-dev": "./node_modules/.bin/webpack -w"
+  },
+  "author": "Jared Fowler <jared.a.fowler@gmail.com> (@jafow)",
+  "license": "MIT",
+  "dependencies": {
+    "fixed-data-table": "^0.6.1",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-preset-react": "^6.11.1",
+    "eslint": "^3.0.1",
+    "eslint-plugin-react": "^5.2.2",
+    "webpack": "^1.13.1"
+  }
+}
