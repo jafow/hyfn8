@@ -8,7 +8,7 @@
     "build": "./node_modules/.bin/webpack",
     "lint": "./node_modules/.bin/eslint src/",
     "start-dev": "./node_modules/.bin/webpack -w",
-    "start": "export PORT=3333 && node server.js"
+    "start": "export PORT=3000 && node server.js"
   },
   "author": "Jared Fowler <jared.a.fowler@gmail.com> (@jafow)",
   "license": "MIT",

@@ -4,8 +4,8 @@ import { Table, Column, Cell } from 'fixed-data-table'
 import ads from './../data/ads'
 import metrics from './../data/ads_metrics'
 
-const AdsIDs = ({ rowIndex,  data, ...props }) => (
-    <Cell class={status ? 'active' : 'inactive'} {...props}>
+const AdsIDs = ({ rowIndex, data, ...props }) => (
+    <Cell {...props}>
       {data[rowIndex].remote_id}
     </Cell>
     )
@@ -28,6 +28,7 @@ class App extends Component {
   }
 
   render() {
+    //  map columns to rows data
     let columns = metrics.column_names.map((col, i) => (
       <Column
         header={<Cell>{col}</Cell>}
@@ -62,8 +63,6 @@ class App extends Component {
 }
 
 render(
-  <App
-    header={'Ad IDs'}
-  />,
+  <App header={'Ad IDs'} />,
   document.getElementById('app')
   )
