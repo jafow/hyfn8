@@ -12,21 +12,32 @@ class App extends Component {
     }
     this.tableName = 'HYFN Ads Metrics'
     this.minWidth = 500
-    this.cellWidth = 150
-    this.rowHeight=100
     this.headerHeight=100
-  }
-
-  componentWillMount() {
-    // do initial fetch for Ads IDs and render fixed column
-    $.getJSON('/ads', function (data) {
-     this.setState({ remoteIds: data.ads })
-    })
+    this.fetchData = this.fetchData.bind(this)
   }
 
   componentDidMount() {
-    // do request for data from /ads and /ads_metrics route
-    $.getJSON('/ads_metrics', function (data) {
+    // do initial fetch for Ads IDs and render fixed column
+    var that = this
+    $.get('/ads', function (data) {
+     var d = JSON.parse(data)
+     console.log('data is ', d)
+     that.setState({ remoteIds: data.ads })
+    })
+  }
+
+  fetchData() {
+    $.get('/ads_metrics', function (data) {
+        console.log('fetching data is ', data)
+        let columnNames = data.column_names
+        let rowsData = data.rows
+        this.setState({ columnNames: columnNames, rowsData: rowsData })
+    })
+  }
+  componentWillMount() {
+    // do request for data from /ads_metrics route
+    $.get('/ads_metrics', function (data) {
+      console.log('data is ', data)
       let columnNames = data.column_names
       let rowsData = data.rows
       this.setState({ columnNames: columnNames, rowsData: rowsData })
@@ -34,8 +45,12 @@ class App extends Component {
   }
 
   render() {
+    // destructer state into an object that can be spread over to reduce # of
+    // props to be apssed down explicitly
     // var { data } = this.state
+    console.log('stat is ', this.state)
     return (
+     <div>
       <MyTable
         header={this.tableName}
         minWidth={this.minWidth}
@@ -48,6 +63,8 @@ class App extends Component {
         columnNames={this.state.columnNames}
         rowsData={this.state.rowsData}
       />
+      <button onClick={this.fetchData}>Click</button>
+      </div>
     )
   }
 }
