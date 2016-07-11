@@ -107,15 +107,27 @@ const metrics = {
 
 }
 
-//const FixedColumn = ({header
+const AdsIDs = ({ rowIndex,  data, ...props }) => (
+    <Cell class={status ? 'active' : 'inactive'} {...props}>
+      {data[rowIndex].remote_id}
+    </Cell>
+    )
 
+const AdsData = ({ rowIndex, col, data, ...props }) => (
+    <Cell {...props}>
+      {data[rowIndex][col]}
+    </Cell>
+    )
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      remoteIds: ads.ads
+      remoteIds: ads.ads,
+      columnNames: metrics.column_names,
+      rowsData: metrics.rows
     }
+    this.cellWidth = 100
   }
 
   componentDidMount() {
@@ -125,16 +137,14 @@ class App extends Component {
   render() {
     let columns = metrics.column_names.map((col, i) => (
       <Column
-      header={col}
-      columnKey={i}
-      width={100}
+        header={<Cell>{col}</Cell>}
+        key={i}
+        columnKey={i}
+        width={this.cellWidth}
+        cell={<AdsData data={this.state.rowsData}  col={col} />}
       />
     ))
 
-    let cells = this.state.remoteIds.map((id, i) => (
-      <Cell columnKey={4} rowIndex={i}>{id.remote_id}</Cell>
-      ))
-  //  {columnKey, rowIndex, ...rest} = this.props
 
     return (
       <Table
@@ -144,8 +154,14 @@ class App extends Component {
         rowsCount={this.state.remoteIds.length}
         rowHeight={100}
         headerHeight={100}
-    
         >
+      <Column
+        header={<Cell>{"Ad IDs"}</Cell>}
+        cell={<AdsIDs data={this.state.remoteIds} col={"Ad IDS"}/>}
+        fixed={true}
+        width={this.cellWidth}
+        />
+
         { columns }
       </Table>
     )
