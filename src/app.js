@@ -1,30 +1,16 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import { Table, Column, Cell } from 'fixed-data-table'
-import ads from './../data/ads'
-import metrics from './../data/ads_metrics'
-
-const AdsIDs = ({ rowIndex,  data, ...props }) => (
-    <Cell class={status ? 'active' : 'inactive'} {...props}>
-      {data[rowIndex].remote_id}
-    </Cell>
-    )
-
-const AdsData = ({ rowIndex, col, data, ...props }) => (
-    <Cell {...props}>
-      {data[rowIndex][col]}
-    </Cell>
-    )
+import MyTable from './MyTable'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      remoteIds: ads.ads,
-      columnNames: metrics.column_names,
-      rowsData: metrics.rows
+      remoteIds: [],
+      columnNames: [],
+      rowsData:[]
     }
-    this.cellWidth = 100
+    this.cellWidth = 150
   }
 
   componentDidMount() {
