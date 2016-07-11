@@ -6,14 +6,16 @@ const fs = require('fs')
 const PORT = process.env.PORT || 3000
 
 app.use(express.static('client'))
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
 
 app.get('/ads', (req, res) => {
-  fs.createReadStream(path.join(__dirname, 'data/ads.json')).pipe(res)
+  console.log('getting ads')
+  res.sendFile(path.join(__dirname, 'data/ads.js'))
 })
 
 app.get('/ads_metrics', (req, res) => {
-  fs.createReadStream(path.join(__dirname, 'data/ads_metrics.json')).pipe(res)
+  console.log('getting ads metrs')
+  res.sendFile(path.join(__dirname, 'data/ads_metrics.js'))
 })
 
 app.listen(PORT, () => {
