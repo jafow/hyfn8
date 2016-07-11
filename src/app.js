@@ -10,50 +10,49 @@ class App extends Component {
       columnNames: [],
       rowsData:[]
     }
+    this.tableName = 'HYFN Ads Metrics'
+    this.minWidth = 500
     this.cellWidth = 150
+    this.rowHeight=100
+    this.headerHeight=100
+  }
+
+  componentWillMount() {
+    // do initial fetch for Ads IDs and render fixed column
+    $.getJSON('/ads', function (data) {
+     this.setState({ remoteIds: data.ads })
+    })
   }
 
   componentDidMount() {
     // do request for data from /ads and /ads_metrics route
+    $.getJSON('/ads_metrics', function (data) {
+      let columnNames = data.column_names
+      let rowsData = data.rows
+      this.setState({ columnNames: columnNames, rowsData: rowsData })
+    })
   }
 
   render() {
-    let columns = metrics.column_names.map((col, i) => (
-      <Column
-        header={<Cell>{col}</Cell>}
-        key={i}
-        columnKey={i}
-        width={this.cellWidth}
-        cell={<AdsData data={this.state.rowsData}  col={col} />}
-      />
-    ))
-
-
+    // var { data } = this.state
     return (
-      <Table
-        header={this.props.header}
-        width={500}
+      <MyTable
+        header={this.tableName}
+        minWidth={this.minWidth}
+        width={600}
         maxHeight={5000}
         rowsCount={this.state.remoteIds.length}
-        rowHeight={100}
-        headerHeight={100}
-        >
-      <Column
-        header={<Cell>{"Ad IDs"}</Cell>}
-        cell={<AdsIDs data={this.state.remoteIds} col={"Ad IDS"}/>}
-        fixed={true}
-        width={this.cellWidth}
-        />
-
-        { columns }
-      </Table>
+        rowHeight={this.rowHeight}
+        headerHeight={this.headerHeight}
+        remoteIds={this.state.remoteIds}
+        columnNames={this.state.columnNames}
+        rowsData={this.state.rowsData}
+      />
     )
   }
 }
 
 render(
-  <App
-    header={'Ad IDs'}
-  />,
+  <App/>,
   document.getElementById('app')
   )
