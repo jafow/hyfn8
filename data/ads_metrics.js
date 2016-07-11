@@ -1,4 +1,4 @@
-{
+module.exports = {
  "column_names": [
       "impressions",
       "reach",
